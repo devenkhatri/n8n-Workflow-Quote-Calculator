@@ -1,6 +1,13 @@
 import { PricingConfig } from './types';
 
 export const PRICING: PricingConfig = {
+  agency: {
+    simple: { min: 5000, base: 10000 },
+    moderate: { min: 17000, base: 25000 },
+    complex: { min: 35000, base: 52000 },
+    enterprise: { min: 110000, base: 175000 }
+  },
+  
   fiverr: {
     simple: { min: 4150, base: 8300 },
     moderate: { min: 16600, base: 24900 },

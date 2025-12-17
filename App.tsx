@@ -6,14 +6,30 @@ import { WorkflowCard } from './components/WorkflowCard';
 import { calculateWorkflowPrice, getVolumeDiscountRate, formatCurrency, getComplexityDetails } from './utils';
 
 const App: React.FC = () => {
-  const [workflows, setWorkflows] = useState<Workflow[]>([{ ...INITIAL_WORKFLOW }]);
-  const [platform, setPlatform] = useState<PlatformType>('fiverr');
+  // Initialize workflows from URL params if present, otherwise use default
+  const [workflows, setWorkflows] = useState<Workflow[]>(() => {
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+      if (params.has('nodes')) {
+        return [{
+          id: 1,
+          nodes: parseInt(params.get('nodes') || '15'),
+          integrations: parseInt(params.get('integrations') || '2'),
+          logic: parseInt(params.get('logic') || '5'),
+          isExpanded: true
+        }];
+      }
+    }
+    return [{ ...INITIAL_WORKFLOW }];
+  });
+
+  const [platform, setPlatform] = useState<PlatformType>('agency');
   const [timeline, setTimeline] = useState<number>(0);
   const [support, setSupport] = useState<number>(0);
   const [adjustment, setAdjustment] = useState<number>(0);
   const [copied, setCopied] = useState(false);
   const [isPriceAnimating, setIsPriceAnimating] = useState(false);
-  const nextIdRef = useRef(2);
+  const nextIdRef = useRef(workflows.length + 1);
 
   const addWorkflow = () => {
     setWorkflows(prev => [
@@ -171,10 +187,11 @@ const App: React.FC = () => {
             {/* Platform Selector */}
             <div className="mb-6">
               <label className="block text-sm font-medium text-slate-700 mb-2">Preferred Pricing Platform</label>
-              <div className="grid grid-cols-3 gap-3">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                 {[
                   { id: 'fiverr', label: '💎 Fiverr' },
                   { id: 'upwork', label: '🔗 Upwork' },
+                  { id: 'agency', label: '🏢 Agency' },
                   { id: 'india', label: '🇮🇳 Direct (India)' }
                 ].map((p) => (
                   <button

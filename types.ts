@@ -1,4 +1,4 @@
-export type PlatformType = 'fiverr' | 'upwork' | 'india';
+export type PlatformType = 'fiverr' | 'upwork' | 'india' | 'agency';
 
 export interface Workflow {
   id: number;
