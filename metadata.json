@@ -1,0 +1,5 @@
+{
+  "name": "N8N Workflow Calculator",
+  "description": "A dynamic quote calculator for N8N workflow projects, allowing cost estimation based on complexity, integrations, and platform rates.",
+  "requestFramePermissions": []
+}
