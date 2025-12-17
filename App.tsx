@@ -1,8 +1,9 @@
 import React, { useState, useMemo, useRef, useEffect } from 'react';
-import { Plus, Copy, Info, AlertCircle, Clock, CheckCircle } from 'lucide-react';
+import { Plus, Copy, Info, AlertCircle, Clock, CheckCircle, BookOpen } from 'lucide-react';
 import { Workflow, PlatformType, QuoteBreakdown } from './types';
 import { INITIAL_WORKFLOW } from './constants';
 import { WorkflowCard } from './components/WorkflowCard';
+import { PricingGuideModal } from './components/PricingGuideModal';
 import { calculateWorkflowPrice, getVolumeDiscountRate, formatCurrency, getComplexityDetails } from './utils';
 
 const App: React.FC = () => {
@@ -29,6 +30,7 @@ const App: React.FC = () => {
   const [adjustment, setAdjustment] = useState<number>(0);
   const [copied, setCopied] = useState(false);
   const [isPriceAnimating, setIsPriceAnimating] = useState(false);
+  const [isGuideOpen, setIsGuideOpen] = useState(false);
   const nextIdRef = useRef(workflows.length + 1);
 
   const addWorkflow = () => {
@@ -36,9 +38,9 @@ const App: React.FC = () => {
       ...prev.map(w => ({ ...w, isExpanded: false })), // Collapse others
       { 
         id: nextIdRef.current++, 
-        nodes: 10, 
-        integrations: 1, 
-        logic: 3,
+        nodes: 5, 
+        integrations: 2, 
+        logic: 5,
         isExpanded: true 
       }
     ]);
@@ -126,14 +128,22 @@ const App: React.FC = () => {
 
   return (
     <div className="min-h-screen p-4 md:p-8 max-w-7xl mx-auto font-sans">
-      <header className="text-center mb-8">
+      <header className="text-center mb-8 relative">
         <h1 className="text-3xl md:text-4xl font-bold text-slate-800 mb-2">
           🚀 N8N Workflow Quote Calculator
         </h1>
-        <p className="text-slate-500 text-sm md:text-base">
+        <p className="text-slate-500 text-sm md:text-base mb-4">
           Estimate project cost based on complexity, integrations, and platform
         </p>
+        <button 
+          onClick={() => setIsGuideOpen(true)}
+          className="inline-flex items-center gap-2 text-sm text-primary-700 bg-primary-50 px-4 py-2 rounded-full font-medium hover:bg-primary-100 transition-colors shadow-sm"
+        >
+          <BookOpen size={16} /> View Pricing Definitions
+        </button>
       </header>
+
+      <PricingGuideModal isOpen={isGuideOpen} onClose={() => setIsGuideOpen(false)} />
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
         

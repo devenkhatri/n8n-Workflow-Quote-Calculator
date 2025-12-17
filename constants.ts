@@ -30,7 +30,7 @@ export const PRICING: PricingConfig = {
 
 export const INITIAL_WORKFLOW = {
     id: 1,
-    nodes: 15,
+    nodes: 5,
     integrations: 2,
     logic: 5,
     isExpanded: true
