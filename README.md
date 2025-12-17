@@ -2,6 +2,8 @@
 
 A professional-grade React application for estimating n8n workflow automation project costs with configurable pricing across multiple platforms (Fiverr, Upwork, India-based freelancers).
 
+![](n8n%20workflow%20pricing%20across%20platforms.png)
+
 ## Key Features
 
 1. **Configurable Pricing Tiers**: Easily edit INR pricing ranges for each platform and complexity level
